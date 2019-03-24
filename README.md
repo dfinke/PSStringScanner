@@ -1,5 +1,7 @@
 # PowerShell String Scanner
-Provides lexical scanning operations on a String
+Provides lexical scanning operations on a String.
+
+Ported from https://github.com/ruby/strscan
 
 # Usage
 
