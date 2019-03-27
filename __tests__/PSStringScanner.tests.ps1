@@ -164,11 +164,61 @@ Describe "Test CheckUntil" {
 
 Describe "Test ScanUntil" {
     BeforeEach {
-        $script:scanner = New-PSStringScanner 'abcädeföghi'
+        # $script:scanner = New-PSStringScanner 'abcädeföghi'
+        $script:scanner = New-PSStringScanner 'DougFinke'
     }
 
     It "Stuff" {
-        $scanner.ScanUntil("ä") | Should Be "abcä"
-        $scanner.ScanUntil("ö") | Should Be "defö"
+        $scanner.ScanUntil("g") | Should Be "Doug"
+        $scanner.pos | Should Be 4
+        $scanner.ScanUntil("ke") | Should Be "Finke"
+        $scanner.pos | Should Be 9
+        $scanner.EoS() | Should Be $true
+
+        # Unicode challenges
+        #$scanner.ScanUntil("ä") | Should Be "abcä"
+        #$scanner.pos | Should Be 4
+        #$scanner.ScanUntil("ö") | Should Be "defö"
+        #$scanner.pos | Should Be 8
+    }
+}
+
+Describe "Test Parse Config" {
+    It "parse kvp" {
+        $scanner = New-PSStringScanner @"
+name = "Alice's website"
+description = "Alice's personal blog"
+url = "http://alice.example.com/"
+public = "true"
+version = "24"
+"@
+        $NAME = '[a-z]+'
+        $WHITESPACE = '\s+'
+        $QUOTE = '"'
+
+        $kvp = [Ordered]@{}
+
+        do {
+            $key = $scanner.Scan($NAME)
+            $scanner.Skip($WHITESPACE)
+            $scanner.Scan('=')
+            $scanner.Skip($WHITESPACE)
+            $scanner.Scan($QUOTE)
+            $value = $scanner.ScanUntil("(?=$QUOTE)")
+            $kvp.$key = $value
+            $scanner.Scan($QUOTE)
+        } until ($scanner.EoS())
+
+        $kvp.Keys.Count | Should Be 5
+        $kvp.Contains("name") | Should Be $true
+        $kvp.name | Should BeExactly "Alice's website"
+        $kvp.Contains("description") | Should Be $true
+        $kvp.description | Should BeExactly "Alice's personal blog"
+        $kvp.Contains("url") | Should Be $true
+        $kvp.url | Should BeExactly "http://alice.example.com/"
+        $kvp.Contains("public") | Should Be $true
+        $kvp.public | Should BeExactly "true"
+        $kvp.Contains("version") | Should Be $true
+        $kvp.version | Should Be 24
     }
 }

@@ -68,7 +68,7 @@ class PSStringScanner {
         $result = $this.MatchResult($value)
 
         if ($result.Success) {
-            $this.pos = $result.Index + $value.Length #+ 1
+            $this.pos = $result.Index + $value.Length
             return $this.pos
         }
 
