@@ -3,7 +3,7 @@ Provides lexical scanning operations on a String.
 
 Ported from https://github.com/ruby/strscan
 
-![](./images/parseconfig.png)
+![](/images/parseconfig.png)
 
 # Usage
 
