@@ -3,7 +3,9 @@ Provides lexical scanning operations on a String.
 
 Ported from https://github.com/ruby/strscan
 
-![](https://raw.githubusercontent.com/dfinke/PSStringScanner/master/images/ParseConfig.png)
+# Parsing a Config File
+
+<img src="https://raw.githubusercontent.com/dfinke/PSStringScanner/master/images/ParseConfig.png?token=AAEGuomtNAFTwuLtXJaC6LyZ0htcZJywks5cpRoCwA%3D%3D">
 
 # Usage
 
