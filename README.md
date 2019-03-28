@@ -2,6 +2,15 @@
 <a href="https://dougfinke.visualstudio.com/PSStringScanner/_build?definitionId=17"><img src="https://dougfinke.visualstudio.com/PSStringScanner/_apis/build/status/PSStringScanner-CI?branchName=master"></a>
 </p>
 
+<p align="center">
+<a href="./LICENSE"><img
+src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+<a href="https://www.powershellgallery.com/packages/PSStringScanner"><img
+src="https://img.shields.io/powershellgallery/dt/PSStringScanner.svg"></a>
+<a href="https://www.powershellgallery.com/packages/PSStringScanner"><img
+src="https://img.shields.io/powershellgallery/v/PSStringScanner.svg"></a>
+</p>
+
 # PowerShell String Scanner
 Provides lexical scanning operations on a String.
 
