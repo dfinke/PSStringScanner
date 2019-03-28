@@ -222,3 +222,17 @@ version = "24"
         $kvp.version | Should Be 24
     }
 }
+
+Describe "Quick brown fox" {
+
+    It "Should scan correctly" {
+
+        $scanner = New-PSStringScanner "The quick brown fox jumped over the lazy dog."
+
+        $scanner.pos         | Should Be 0
+        $scanner.Scan("The") | Should Be "The"
+        $scanner.pos         | Should Be 3
+        $scanner.Scan("The") | Should BeNullOrEmpty
+        $scanner.pos         | Should Be 3
+    }
+}
