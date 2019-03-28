@@ -223,16 +223,28 @@ version = "24"
     }
 }
 
-Describe "Quick brown fox" {
+Describe "Scann 'The quick brown fox jumped over the lazy dog.'" {
+    BeforeAll {
+        $script:scanner = New-PSStringScanner "The quick brown fox jumped over the lazy dog."
+    }
 
-    It "Should scan correctly" {
-
-        $scanner = New-PSStringScanner "The quick brown fox jumped over the lazy dog."
-
+    It "Position should be 0" {
         $scanner.pos         | Should Be 0
+    }
+
+    It "Should be 'The'" {
         $scanner.Scan("The") | Should Be "The"
+    }
+
+    It "Position should be 3" {
         $scanner.pos         | Should Be 3
+    }
+
+    It "Should be empty string" {
         $scanner.Scan("The") | Should BeNullOrEmpty
+    }
+
+    It "Position should be 3" {
         $scanner.pos         | Should Be 3
     }
 }
