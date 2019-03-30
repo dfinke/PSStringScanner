@@ -209,22 +209,22 @@ Describe "Test SkipUntil" {
         $script:scanner = New-PSStringScanner 'Foo Bar Baz'
     }
 
-    It "Check for 'Foo'" {
+    It "Check for 'Foo' in string 'Foo Bar Baz' pos [3]" {
         $scanner.SkipUntil("Foo") | Should Be 3
         $scanner.pos              | Should Be 3
     }
 
-    It "Check for 'Bar'" {
+    It "Check for 'Bar' in string 'Foo Bar Baz' pos [7]" {
         $scanner.SkipUntil("Bar") | Should Be 7
         $scanner.pos              | Should Be 7
     }
 
-    It "Check for 'Qux'" {
+    It "Check for 'Qux' in string 'Foo Bar Baz' pos[`$null] and EoS [`$false]" {
         $scanner.SkipUntil("Qux") | Should Be $null
         $scanner.EoS()            | Should Be $false
     }
 
-    It "Should work" {
+    It "Check for '12' in string 'Fri Dec 12 1975 14:39' pos [10]" {
         $script:scanner = New-PSStringScanner 'Fri Dec 12 1975 14:39'
         $scanner.SkipUntil('12') | Should Be 10
     }
