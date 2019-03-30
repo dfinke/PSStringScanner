@@ -18,7 +18,7 @@ Ported from https://github.com/ruby/strscan
 
 # Parsing a Config File
 
-<img src="https://raw.githubusercontent.com/dfinke/PSStringScanner/master/images/ParseConfig.png?token=AAEGuomtNAFTwuLtXJaC6LyZ0htcZJywks5cpRoCwA%3D%3D">
+<img src="https://raw.githubusercontent.com/dfinke/PSStringScanner/master/images/ParseConfig.png">
 
 # Usage
 
