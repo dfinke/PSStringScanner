@@ -1,0 +1,2 @@
+websiteName = "Alice's website" websitDescription = "Alice's personal blog" websiteUrl = "http://alice.example.com/" isPublic = "true" websiteVersion = "24"
+websiteName = "Alice's website Part2" websitDescription = "Alice's personal blog Part2" websiteUrl = "http://alice.example.tv/" isPublic = "false" websiteVersion = "42"
