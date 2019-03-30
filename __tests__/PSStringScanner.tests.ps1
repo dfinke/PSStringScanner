@@ -4,6 +4,27 @@ Import-Module $p -Force
 
 Describe "Test words, whitespace and eos" {
     Context "String being parsed ['This is an example string']" {
+        It "Should work" {
+            $scanner = New-PSStringScanner 'This is an example string'
+
+            $scanner.EoS()        | Should Be $false
+            $scanner.Scan("\w+")  | Should BeExactly 'This'
+            $scanner.Scan("\s+")  | Should Be ' '
+            $scanner.Scan("\w+")  | Should BeExactly 'is'
+            $scanner.EoS()        | Should Be $false
+            $scanner.Scan("\s+")  | Should Be ' '
+            $scanner.Scan("\w+")  | Should BeExactly 'an'
+            $scanner.Scan("\s+")  | Should Be ' '
+            $scanner.Scan("\w+")  | Should BeExactly  'example'
+            $scanner.Scan("\s+")  | Should Be ' '
+            $scanner.Scan("\w+")  | Should BeExactly 'string'
+            $scanner.EoS()        | Should Be $true
+        }
+    }
+}
+
+Describe "Test words, whitespace and eos" {
+    Context "String being parsed ['This is an example string']" {
         $scanner = New-PSStringScanner 'This is an example string'
 
         It "Verifying not EoS [$($scanner.EoS())]" {
