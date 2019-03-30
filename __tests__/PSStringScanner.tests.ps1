@@ -162,13 +162,12 @@ Describe "Test check & skip methods" {
     }
 }
 
-Describe "Test loops" {
+Describe "Test loops on List ['Eggs, cheese, onion, potato, peas']" {
 
-    BeforeEach {
+    Context "Generate items With Check() & Skip() methods" {
+
         $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
-    }
 
-    It "With check & skip" {
         $actualItems = @()
         while ($true) {
             $actualItems += $scanner.scan("\w+")
@@ -180,15 +179,28 @@ Describe "Test loops" {
             }
         }
 
-        $actualItems.Count | Should Be 5
-        $actualItems | Should Be 'Eggs', 'cheese', 'onion', 'potato', 'peas'
+        It "Item count should be 5" {
+            $actualItems.Count | Should Be 5
+        }
+
+        It "Array items ['Eggs, cheese, onion, potato, peas']" {
+            $actualItems | Should Be 'Eggs', 'cheese', 'onion', 'potato', 'peas'
+        }
     }
 
-    It "Do {} Until ()" {
+    Context "Generate Items with Do {} Until ()" {
+
+        $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
+
         $actualItems = do {$scanner.scan("\w+")} until ($scanner.EoS())
 
-        $actualItems.Count | Should Be 5
-        $actualItems | Should Be 'Eggs', 'cheese', 'onion', 'potato', 'peas'
+        It "Item count should be 5" {
+            $actualItems.Count | Should Be 5
+        }
+
+        It "Array items ['Eggs, cheese, onion, potato, peas']"{
+            $actualItems | Should Be 'Eggs', 'cheese', 'onion', 'potato', 'peas'
+        }
     }
 }
 
