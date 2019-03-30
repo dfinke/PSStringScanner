@@ -23,7 +23,7 @@ Describe "Test words, whitespace and eos" {
     }
 }
 
-Describe "Test words, whitespace and eos" {
+Describe "Test words, whitespace and eos step-by-step" {
     Context "String being parsed ['This is an example string']" {
         $scanner = New-PSStringScanner 'This is an example string'
 
@@ -77,54 +77,88 @@ Describe "Test words, whitespace and eos" {
     }
 }
 
-Describe "Testing String Scanner" {
+Describe "Testing String Scanner with string ['This is an example string']" {
     BeforeAll {
         $script:scanner = New-PSStringScanner 'This is an example string'
     }
 
-    It "Word should be 'This'" {
+    It "First word should be 'This'" {
         $scanner.Scan("\w+") | Should BeExactly "This"
     }
 
-    It "Word should be 'is'" {
+    It "Followed by 'is'" {
         $scanner.Scan("\w+") | Should BeExactly "is"
     }
 
-    It "Word should be 'an'" {
+    It "Followed by 'an'" {
         $scanner.Scan("\w+") | Should BeExactly "an"
     }
 
-    It "Word should be 'example'" {
+    It "Followed by 'example'" {
         $scanner.Scan("\w+") | Should BeExactly "example"
     }
 
-    It "Word should be 'string'" {
+    It "Followed by 'string'" {
         $scanner.Scan("\w+") | Should BeExactly "string"
     }
 
-    It "Word should at End Of String" {
+    It "End Of String should be $($scanner.EOS())" {
         $scanner.EOS() | Should be $true
     }
 }
 
 Describe "Test check & skip methods" {
+    Context "List items being parsed ['Eggs, cheese, onion, potato, peas']"{
+        BeforeEach {
+            $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
+        }
 
-    BeforeEach {
-        $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
-    }
+        It "Should find 'Eggs' first" {
+            $actual = $scanner.scan("\w+")
+            $actual | Should Be 'Eggs'
+        }
 
-    It "Should find ',' next" {
-        $null = $scanner.scan("\w+")
-        $scanner.Check(',') | Should Be $true
-    }
+        It "Should find 'cheese' next" {
+            $null = $scanner.scan("\w+")
+            $scanner.Check(',') | Should Be $true
+            $scanner.Skip(',\s+')
 
-    It "Should find 'cheese' next" {
-        $null = $scanner.scan("\w+")
-        $scanner.Check(',') | Should Be $true
-        $scanner.Skip(',\s+')
+            $actual = $scanner.scan("\w+")
+            $actual | Should BeExactly "cheese"
+        }
 
-        $actual = $scanner.scan("\w+")
-        $actual | Should BeExactly "cheese"
+        It "Should find 'onion' next" {
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $scanner.Check(',') | Should Be $true
+            $scanner.Skip(',\s+')
+
+            $actual = $scanner.scan("\w+")
+            $actual | Should BeExactly "onion"
+        }
+
+        It "Should find 'potato' next" {
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $scanner.Check(',') | Should Be $true
+            $scanner.Skip(',\s+')
+
+            $actual = $scanner.scan("\w+")
+            $actual | Should BeExactly "potato"
+        }
+
+        It "Should find 'peas' next" {
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $null = $scanner.scan("\w+")
+            $scanner.Check(',') | Should Be $true
+            $scanner.Skip(',\s+')
+
+            $actual = $scanner.scan("\w+")
+            $actual | Should BeExactly "peas"
+        }
     }
 }
 
