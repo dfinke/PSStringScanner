@@ -235,27 +235,27 @@ Describe "Test CheckUntil" {
         $script:scanner = New-PSStringScanner 'Foo Bar Baz'
     }
 
-    It "Check for 'Foo'" {
+    It "Check for 'Foo' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Foo") | Should Be 'Foo'
         $scanner.pos              | Should Be 0
     }
 
-    It "Check for 'Foo Bar'" {
+    It "Check for 'Foo Bar' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Foo Bar") | Should Be 'Foo Bar'
         $scanner.pos              | Should Be 0
     }
 
-    It "Check for 'Bar'" {
+    It "Check for 'Bar' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Bar") | Should Be "Bar"
         $scanner.pos              | Should Be 0
     }
 
-    It "Check for 'Qux'" {
+    It "Check for 'Qux' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Qux") | Should Be $null
         $scanner.EoS()            | Should Be $false
     }
 
-    It "Check for '12'" {
+    It "Check for '12' in 'Fri Dec 12 1975 14:39'" {
         $script:scanner = New-PSStringScanner 'Fri Dec 12 1975 14:39'
         $scanner.CheckUntil("12") | Should Be 12
         $scanner.pos              | Should Be 0
@@ -266,11 +266,10 @@ Describe "Test CheckUntil" {
 
 Describe "Test ScanUntil" {
     BeforeEach {
-        # $script:scanner = New-PSStringScanner 'abcädeföghi'
         $script:scanner = New-PSStringScanner 'DougFinke'
     }
 
-    It "Stuff" {
+    It "Test 'DougFinke'" {
         $scanner.ScanUntil("g") | Should Be "Doug"
         $scanner.pos | Should Be 4
         $scanner.ScanUntil("ke") | Should Be "Finke"
