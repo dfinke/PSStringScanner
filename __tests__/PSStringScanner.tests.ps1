@@ -3,21 +3,56 @@ $p = Resolve-Path "$PSScriptRoot\..\PSStringScanner.psd1"
 Import-Module $p -Force
 
 Describe "Test words, whitespace and eos" {
-    It "Should work" {
+    Context "String being parsed ['This is an example string']" {
         $scanner = New-PSStringScanner 'This is an example string'
 
-        $scanner.EoS()        | Should Be $false
-        $scanner.Scan("\w+")  | Should BeExactly 'This'
-        $scanner.Scan("\s+")  | Should Be ' '
-        $scanner.Scan("\w+")  | Should BeExactly 'is'
-        $scanner.EoS()        | Should Be $false
-        $scanner.Scan("\s+")  | Should Be ' '
-        $scanner.Scan("\w+")  | Should BeExactly 'an'
-        $scanner.Scan("\s+")  | Should Be ' '
-        $scanner.Scan("\w+")  | Should BeExactly  'example'
-        $scanner.Scan("\s+")  | Should Be ' '
-        $scanner.Scan("\w+")  | Should BeExactly 'string'
-        $scanner.EoS()        | Should Be $true
+        It "Verifying not EoS [$($scanner.EoS())]" {
+            $scanner.EoS()        | Should Be $false
+        }
+
+        It "Next word ['This']" {
+            $scanner.Scan("\w+")  | Should BeExactly 'This'
+        }
+
+        It "Followed by a space [' ']" {
+            $scanner.Scan("\s+")  | Should BeExactly ' '
+        }
+        
+        It "Next word ['is']" {
+            $scanner.Scan("\w+")  | Should BeExactly 'is'
+        }
+        
+        It "Verifying not EoS [$($scanner.EoS())]" {
+            $scanner.EoS()        | Should Be $false
+        }
+
+        It "Followed by a space [' ']" {
+            $scanner.Scan("\s+")  | Should BeExactly ' '
+        }
+
+        It "Next word ['an']" {
+            $scanner.Scan("\w+")  | Should BeExactly 'an'
+        }
+
+        It "Followed by a space [' ']" {
+            $scanner.Scan("\s+")  | Should BeExactly ' '
+        }
+
+        It "Next word ['example']" {
+            $scanner.Scan("\w+")  | Should BeExactly 'example'
+        }
+
+        It "Followed by a space [' ']" {
+            $scanner.Scan("\s+")  | Should BeExactly ' '
+        }
+
+        It "Next word ['string']" {
+            $scanner.Scan("\w+")  | Should BeExactly 'string'
+        }
+
+        It "Verifying EoS is [$($scanner.EoS())]" {
+            $scanner.EoS()        | Should Be $true
+        }
     }
 }
 
