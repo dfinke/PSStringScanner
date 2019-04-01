@@ -90,6 +90,10 @@ class PSStringScanner {
         return $null
     }
 
+    Terminate() {
+        $this.pos = $this.s.Length
+    }
+
     [bool]EoS() {
         return ($this.pos -eq $this.s.Length)
     }

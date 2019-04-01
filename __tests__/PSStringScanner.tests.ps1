@@ -38,11 +38,11 @@ Describe "Test words, whitespace and eos step-by-step" {
         It "Followed by a space [' ']" {
             $scanner.Scan("\s+")  | Should BeExactly ' '
         }
-        
+
         It "Next word ['is']" {
             $scanner.Scan("\w+")  | Should BeExactly 'is'
         }
-        
+
         It "Verifying not EoS [$($scanner.EoS())]" {
             $scanner.EoS()        | Should Be $false
         }
@@ -108,7 +108,7 @@ Describe "Testing String Scanner with string ['This is an example string']" {
 }
 
 Describe "Test check & skip methods" {
-    Context "List items being parsed ['Eggs, cheese, onion, potato, peas']"{
+    Context "List items being parsed ['Eggs, cheese, onion, potato, peas']" {
         BeforeEach {
             $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
         }
@@ -198,7 +198,7 @@ Describe "Test loops on List ['Eggs, cheese, onion, potato, peas']" {
             $actualItems.Count | Should Be 5
         }
 
-        It "Array items ['Eggs, cheese, onion, potato, peas']"{
+        It "Array items ['Eggs, cheese, onion, potato, peas']" {
             $actualItems | Should Be 'Eggs', 'cheese', 'onion', 'potato', 'peas'
         }
     }
@@ -227,6 +227,26 @@ Describe "Test SkipUntil" {
     It "Check for '12' in string 'Fri Dec 12 1975 14:39' pos [10]" {
         $script:scanner = New-PSStringScanner 'Fri Dec 12 1975 14:39'
         $scanner.SkipUntil('12') | Should Be 10
+    }
+}
+
+Describe "Test Terminate" {
+
+    BeforeAll {
+        $script:scanner = New-PSStringScanner 'Foo Bar Baz'
+    }
+
+    It "Should not be at the EoS" {
+        $scanner.EoS() | Should Be $false
+    }
+
+    It "Should be at the EoS" {
+        $scanner.Terminate()
+        $scanner.EoS() | Should Be $true
+    }
+
+    It "Should not find Bar" {
+        $scanner.Scan("Bar") | Should BeNullOrEmpty
     }
 }
 
