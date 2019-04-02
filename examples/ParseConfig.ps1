@@ -9,9 +9,9 @@ $QUOTE = '"'
 $kvp = [Ordered]@{}
 do {
     $key = $scanner.Scan($NAME)
-    $scanner.Skip($WHITESPACE)
+    $null = $scanner.Skip($WHITESPACE)
     $null = $scanner.Scan('=')
-    $scanner.Skip($WHITESPACE)
+    $null = $scanner.Skip($WHITESPACE)
     $null = $scanner.Scan($QUOTE)
     $value = $scanner.ScanUntil("(?=$QUOTE)")
     $kvp.$key = $value
