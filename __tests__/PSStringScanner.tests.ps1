@@ -344,7 +344,7 @@ version = "24"
     }
 }
 
-Describe "Scann 'The quick brown fox jumped over the lazy dog.'" {
+Describe "Scan 'The quick brown fox jumped over the lazy dog.'" {
     BeforeAll {
         $script:scanner = New-PSStringScanner "The quick brown fox jumped over the lazy dog."
     }
@@ -367,5 +367,33 @@ Describe "Scann 'The quick brown fox jumped over the lazy dog.'" {
 
     It "Position should be 3" {
         $scanner.pos         | Should Be 3
+    }
+}
+
+Describe "Test Clone() method" {
+
+    BeforeAll {
+        $script:scanner = New-PSStringScanner "The quick brown fox jumped over the lazy dog."
+    }
+
+    It "Should Clone" {
+        $d = $scanner.Clone()
+
+        $d.s   | Should be $scanner.s
+        $d.pos | Should Be $scanner.pos
+    }
+
+    It "Only the Clone should change" {
+
+        $d = $scanner.Clone()
+
+        $d.s         | Should Be $scanner.s
+        $d.pos       | Should Be $scanner.pos
+
+        $actual = $d.Scan("jumped")
+
+        $actual      | Should BeExactly "jumped"
+        $d.pos       | Should Be 26
+        $scanner.pos | Should Be 0
     }
 }

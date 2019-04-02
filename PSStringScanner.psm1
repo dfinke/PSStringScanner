@@ -1,6 +1,6 @@
 # https://github.com/ruby/strscan
 
-class PSStringScanner {
+class PSStringScanner : ICloneable {
     [string]$s
     $pos = 0
 
@@ -96,6 +96,14 @@ class PSStringScanner {
 
     [bool]EoS() {
         return ($this.pos -eq $this.s.Length)
+    }
+
+    [Object] Clone() {
+
+        $newPSStringScanner = [PSStringScanner]::new($this.s)
+        $newPSStringScanner.pos = $this.pos
+
+        return $newPSStringScanner
     }
 }
 
