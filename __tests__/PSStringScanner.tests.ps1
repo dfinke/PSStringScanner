@@ -107,6 +107,21 @@ Describe "Testing String Scanner with string ['This is an example string']" {
     }
 }
 
+Describe "Test skip method" {
+    BeforeAll {
+        $script:scanner = New-PSStringScanner 'stra strb strc'
+    }
+
+    It "Should return correct length if found" {
+        $scanner.Skip("\w+") | Should Be 4
+        $scanner.Skip("\s+") | Should Be 1
+        $scanner.Skip("\w+") | Should Be 4
+        $scanner.Skip("\s+") | Should Be 1
+        $scanner.Skip("\w+") | Should Be 4
+        $scanner.Skip("\s+") | Should Be $null
+        $scanner.Skip("\w+") | Should Be $null
+    }
+}
 Describe "Test check & skip methods" {
     Context "List items being parsed ['Eggs, cheese, onion, potato, peas']" {
         BeforeEach {
