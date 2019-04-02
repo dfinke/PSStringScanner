@@ -15,8 +15,6 @@ class PSStringScanner : ICloneable {
     }
 
     [string] Scan([string]$value) {
-        # [regex]$p = $value
-        # $result = $p.Match($this.s, $this.pos)
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
@@ -27,18 +25,12 @@ class PSStringScanner : ICloneable {
     }
 
     [bool]Check($value) {
-        # [regex]$p = $value
-        # $result = $p.Match($this.s, $this.pos)
-
         $result = $this.MatchResult($value)
 
         return $result.success
     }
 
     [object]Skip($value) {
-        # [regex]$p = $value
-        # $result = $p.Match($this.s, $this.pos)
-
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
