@@ -34,7 +34,6 @@ class PSStringScanner : ICloneable {
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
-            #return $result.Index + $result.Length
             return $result.Length
         }
 
