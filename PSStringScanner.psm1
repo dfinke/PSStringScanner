@@ -110,3 +110,13 @@ function New-PSStringScanner {
 
     [PSStringScanner]::new($text)
 }
+
+Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Scan -Value {
+    param($v)
+
+    $scanner = New-PSStringScanner $this
+    do {
+        $token = $scanner.Scan($v)
+        $token
+    } until([string]::IsNullOrEmpty($token))
+}
