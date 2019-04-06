@@ -412,3 +412,53 @@ Describe "Test Clone() method" {
         $scanner.pos | Should Be 0
     }
 }
+
+Describe "Test Clone() method" {
+
+    It "Should find countries" {
+
+        $str = @"
+Here are the top ten countries by population, as of 2013 when the
+world population was 7 billion.
+
+China:          1,361,540,000
+India:          1,237,510,000
+United States:    317,234,000
+Indonesia:        237,641,326
+Brazil:           201,032,714
+Pakistan:         185,028,000
+Nigeria:          173,615,000
+Bangladesh:       152,518,015
+Russia:           143,600,000
+Japan:            127,290,000
+"@
+
+        $countries = "[a-zA-Z ]+:"
+
+        $actual = $str.Scan($countries)
+
+        $actual.Count | Should Be 11
+    }
+
+    It "Should return null or empty" {
+
+        $str = @"
+Here are the top ten countries by population, as of 2013 when the
+world population was 7 billion.
+
+China:          1,361,540,000
+India:          1,237,510,000
+United States:    317,234,000
+Indonesia:        237,641,326
+Brazil:           201,032,714
+Pakistan:         185,028,000
+Nigeria:          173,615,000
+Bangladesh:       152,518,015
+Russia:           143,600,000
+Japan:            127,290,000
+"@
+
+        $actual = $str.Scan()
+        $actual | Should BeNullOrEmpty
+    }
+}

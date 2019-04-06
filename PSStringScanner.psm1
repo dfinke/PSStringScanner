@@ -1,8 +1,8 @@
 # https://github.com/ruby/strscan
 
 class PSStringScanner : ICloneable {
-    [string]$s
     $pos = 0
+    [string]$s
 
     PSStringScanner($s) {
         $this.s = $s
@@ -14,7 +14,7 @@ class PSStringScanner : ICloneable {
         return $p.Match($this.s, $this.pos)
     }
 
-    [string] Scan([string]$value) {
+    [object] Scan([string]$value) {
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
@@ -34,7 +34,6 @@ class PSStringScanner : ICloneable {
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
-            #return $result.Index + $result.Length
             return $result.Length
         }
 
@@ -110,4 +109,14 @@ function New-PSStringScanner {
     )
 
     [PSStringScanner]::new($text)
+}
+
+Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Scan -Value {
+    param($v)
+
+    $scanner = New-PSStringScanner $this
+    do {
+        $token = $scanner.Scan($v)
+        $token
+    } until([string]::IsNullOrEmpty($token))
 }
