@@ -1,8 +1,8 @@
 # https://github.com/ruby/strscan
 
 class PSStringScanner : ICloneable {
-    [string]$s
     $pos = 0
+    [string]$s
 
     PSStringScanner($s) {
         $this.s = $s
@@ -14,7 +14,7 @@ class PSStringScanner : ICloneable {
         return $p.Match($this.s, $this.pos)
     }
 
-    [string] Scan([string]$value) {
+    [object] Scan([string]$value) {
         $result = $this.MatchResult($value)
         if ($result.success) {
             $this.pos = $result.Index + $result.Length
