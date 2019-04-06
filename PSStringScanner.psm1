@@ -117,6 +117,6 @@ Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Sca
     $scanner = New-PSStringScanner $this
     do {
         $token = $scanner.Scan($v)
-        $token
+        if ($null -ne $token) {$token}
     } until([string]::IsNullOrEmpty($token))
 }

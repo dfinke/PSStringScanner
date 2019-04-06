@@ -437,7 +437,7 @@ Japan:            127,290,000
 
         $actual = $str.Scan($countries)
 
-        $actual.Count | Should Be 11
+        $actual.Count | Should Be 10
     }
 
     It "Should return null or empty" {
