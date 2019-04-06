@@ -4,7 +4,7 @@
     RootModule        = 'PSStringScanner.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.0.2'
 
     # ID used to uniquely identify this module
     GUID              = '44ca17fd-a4a7-4316-a1d8-76bc5abbe1c7'
@@ -94,10 +94,10 @@ Provides lexical scanning operations on a String
             #IconUri = ""
 
             # The web address of this module's project or support homepage.
-            ProjectUri   = "https://github.com/dfinke/StringScanner"
+            ProjectUri   = "https://github.com/dfinke/PSStringScanner"
 
             # The web address of this module's license. Points to a page that's embeddable and linkable.
-            LicenseUri   = "https://github.com/dfinke/StringScanner/blob/master/LICENSE"
+            LicenseUri   = "https://github.com/dfinke/PSStringScanner/blob/master/LICENSE"
 
             # Release notes for this particular version of the module
             #ReleaseNotes = $True
