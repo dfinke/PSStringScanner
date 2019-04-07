@@ -1,4 +1,4 @@
-Import-Module ..\PSStringScanner.psd1 -Force
+#Requires -Modules PSStringScanner
 
 $scanner = New-PSStringScanner (Get-Content -Raw $PSScriptRoot\config.txt)
 

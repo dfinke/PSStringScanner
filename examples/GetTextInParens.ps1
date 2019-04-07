@@ -1,4 +1,4 @@
-﻿Import-Module ..\PSStringScanner.psd1 -Force
+﻿#Requires -Modules PSStringScanner
 
 $scanner = New-PSStringScanner @"
 'Hello,' he (the man) said. (To no one in particular.)

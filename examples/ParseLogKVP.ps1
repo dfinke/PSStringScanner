@@ -1,4 +1,4 @@
-Import-Module ..\PSStringScanner.psd1 -Force
+#Requires -Modules PSStringScanner
 
 #region Constants
 $NAME = '[a-zA-Z]+'
