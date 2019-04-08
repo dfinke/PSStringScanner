@@ -93,6 +93,10 @@ class PSStringScanner : ICloneable {
         return ($this.pos -eq $this.s.Length)
     }
 
+    Reset() {
+        $this.pos = 0
+    }
+
     [Object] Clone() {
 
         $newPSStringScanner = [PSStringScanner]::new($this.s)

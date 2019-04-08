@@ -462,3 +462,23 @@ Japan:            127,290,000
         $actual | Should BeNullOrEmpty
     }
 }
+
+Describe "Test Clone() method" {
+
+    It "Should Reset the scan pointer to the beginning" {
+        $str = "The quick brown fox jumped over the lazy dog."
+        $scanner = New-PSStringScanner $str
+
+        $actual = $scanner.Scan("dog\.")
+
+        $actual      | Should BeExactly "dog."
+        $scanner.pos | Should Be $str.Length
+
+        $scanner.Reset()
+        $scanner.pos | Should Be 0
+
+        $actual = $scanner.Scan("quick")
+        $actual      | Should BeExactly "quick"
+        $scanner.pos | Should Be 9
+    }
+}
