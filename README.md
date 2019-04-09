@@ -39,7 +39,7 @@ $scanner.Scan("\w+")         # 'string'
 $scanner.EoS()               # -> True
 ```
 
-# More Usage
+# More Uses
 Two approaches, same results.
 
 ## Using Scan, Check and Skip
