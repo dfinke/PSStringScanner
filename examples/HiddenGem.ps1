@@ -13,9 +13,8 @@ Completed 200 OK in 79ms (Views: 78.8ms | ActiveRecord: 0.0ms)
 
 $scanner = New-PSStringScanner $logentry
 
-$log = [Ordered]@{}
-
 while (!$scanner.Eos()) {
+    $log = [Ordered]@{}
     $null = $scanner.skip('Started ')
     $log.Method = $scanner.ScanUntil('[A-Z]+')
     $log.Path = $scanner.Scan('\s"(.+)"').Trim()
@@ -28,7 +27,6 @@ while (!$scanner.Eos()) {
     $log.ResponseCode = $scanner.Scan('\d{3}')
     $null = $scanner.skip(' OK in ')
     $log.Duration = $scanner.ScanUntil('ms')
-    $null = $scanner.Scan('\)')    
+    $null = $scanner.Scan('\)')
+    [PSCustomObject]$log
 }
-
-[PSCustomObject]$log
