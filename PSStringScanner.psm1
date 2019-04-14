@@ -114,6 +114,25 @@ class PSStringScanner : ICloneable {
         return $this.s.substring($this.pos, $length)
     }
 
+    <#
+        Scans one character and returns it.
+            $s = New-PSStringScanner "ab"
+            $s.GetCh()  # => "a"
+            $s.GetCh()  # => "b"
+            $s.GetCh()  # => $null
+    #>
+    [object]GetCh() {
+
+        if ($this.EoS()) {
+            return $null
+        }
+
+        $retVal = $this.s.substring($this.pos, 1)
+        $this.pos += 1
+
+        return $retVal
+    }
+
     [Object] Clone() {
 
         $newPSStringScanner = [PSStringScanner]::new($this.s)

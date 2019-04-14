@@ -487,12 +487,38 @@ Describe "Test Peek" {
     It "Should Peek" {
         $scanner = New-PSStringScanner "test string"
 
-        $scanner.Peek(7) | Should BeExactly "test st"
-        $scanner.Peek(7) | Should BeExactly "test st"
+        $scanner.Peek(7)  | Should BeExactly "test st"
+        $scanner.Peek(7)  | Should BeExactly "test st"
         $scanner.Scan("test")
-        $scanner.Peek(5) | Should BeExactly " stri"
+        $scanner.Peek(5)  | Should BeExactly " stri"
         $scanner.Peek(10) | Should BeExactly " string"
         $scanner.Scan("string")
         $scanner.Peek(10) | Should BeNullOrEmpty
+    }
+}
+
+Describe "Test GetCh" {
+
+    It "Should GetCh" {
+        $scanner = New-PSStringScanner 'abcde'
+
+        $scanner.GetCh() | Should BeExactly 'a'
+        $scanner.GetCh() | Should BeExactly 'b'
+        $scanner.GetCh() | Should BeExactly 'c'
+        $scanner.GetCh() | Should BeExactly 'd'
+        $scanner.GetCh() | Should BeExactly 'e'
+        $scanner.GetCh() | Should BeNullOrEmpty
+    }
+
+    It "Should GetCh  with Scan" {
+        $scanner = New-PSStringScanner 'test string'
+
+        $scanner.GetCh() | Should BeExactly 't'
+        $scanner.GetCh() | Should BeExactly 'e'
+        $scanner.Scan("str")
+        $scanner.GetCh() | Should BeExactly 'i'
+        $scanner.GetCh() | Should BeExactly 'n'
+        $scanner.GetCh() | Should BeExactly 'g'
+        $scanner.GetCh() | Should BeNullOrEmpty
     }
 }
