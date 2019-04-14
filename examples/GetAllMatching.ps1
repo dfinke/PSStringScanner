@@ -1,5 +1,7 @@
 <#
 
+PS> Get-AllMatching "hello 123 hi 234" \w+
+
 pos Length Value String           Pattern
 --- ------ ----- ------           -------
   0      5 hello hello 123 hi 234 \w+
@@ -7,12 +9,14 @@ pos Length Value String           Pattern
   9      2 hi    hello 123 hi 234 \w+
  12      3 234   hello 123 hi 234 \w+
 
+PS> Get-AllMatching "hello 123 hi 234" \d+
 
 pos Length Value String           Pattern
 --- ------ ----- ------           -------
   0      3 123   hello 123 hi 234 \d+
   9      3 234   hello 123 hi 234 \d+
 
+PS> Get-AllMatching "hello 123 there234hi" [a-zA-Z]+
 
 pos Length Value String               Pattern
 --- ------ ----- ------               -------
