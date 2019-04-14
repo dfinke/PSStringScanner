@@ -97,6 +97,23 @@ class PSStringScanner : ICloneable {
         $this.pos = 0
     }
 
+    <#
+        call-seq: peek(len)
+
+        Extracts a string corresponding to string[pos,len], without advancing the scan pointer.
+
+          $s = New-PSStringScanner 'test string'
+          $s.peek(7)          # => "test st"
+          $s.peek(7)          # => "test st"
+    #>
+    [object]Peek($length) {
+        if ($length + $this.pos -gt $this.s.length) {
+            $length = $this.s.length - $this.pos
+        }
+
+        return $this.s.substring($this.pos, $length)
+    }
+
     [Object] Clone() {
 
         $newPSStringScanner = [PSStringScanner]::new($this.s)

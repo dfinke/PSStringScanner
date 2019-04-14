@@ -482,3 +482,17 @@ Describe "Test Clone() method" {
         $scanner.pos | Should Be 9
     }
 }
+
+Describe "Test Peek" {
+    It "Should Peek" {
+        $scanner = New-PSStringScanner "test string"
+
+        $scanner.Peek(7) | Should BeExactly "test st"
+        $scanner.Peek(7) | Should BeExactly "test st"
+        $scanner.Scan("test")
+        $scanner.Peek(5) | Should BeExactly " stri"
+        $scanner.Peek(10) | Should BeExactly " string"
+        $scanner.Scan("string")
+        $scanner.Peek(10) | Should BeNullOrEmpty
+    }
+}
