@@ -8,12 +8,10 @@ pos Length Value String           Pattern
  12      3 234   hello 123 hi 234 \w+
 
 
-
 pos Length Value String           Pattern
 --- ------ ----- ------           -------
   0      3 123   hello 123 hi 234 \d+
   9      3 234   hello 123 hi 234 \d+
-
 
 
 pos Length Value String               Pattern
