@@ -34,9 +34,10 @@ function Get-AllMatching {
     $scanner = New-PSStringScanner $str
 
     do {
-        $h = [ordered]@{pos = $scanner.pos}
+        $h = [ordered]@{}
 
         if ($v = $scanner.Scan($pattern)) {
+            $h.Postion = $scanner.pos - $v.length
             $h.Length = $v.length
             $h.Value = $v
             $h.String = $str
