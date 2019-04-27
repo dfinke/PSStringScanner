@@ -3,15 +3,29 @@
 class PSStringScanner : ICloneable {
     $pos = 0
     [string]$s
+    [System.Text.RegularExpressions.Match]$regexMatch
 
     PSStringScanner($s) {
         $this.s = $s
     }
 
+    [object]Matches() {
+        if ($null -ne $this.regexMatch.Groups) {
+            return $this.regexMatch.Groups
+        }
+
+        return $null
+    }
+
     Hidden [System.Text.RegularExpressions.Match]MatchResult([string]$value) {
         [regex]$p = $value
 
-        return $p.Match($this.s, $this.pos)
+        $result = $p.Match($this.s, $this.pos)
+        if ($result.Success) {
+            $this.regexMatch = $result
+        }
+
+        return $result
     }
 
     [object] Scan([string]$value) {

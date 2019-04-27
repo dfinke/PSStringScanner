@@ -2,6 +2,23 @@ $p = Resolve-Path "$PSScriptRoot\..\PSStringScanner.psd1"
 
 Import-Module $p -Force
 
+Describe "Test match results" {
+
+    It "Should have groups" {
+        $scanner = New-PSStringScanner '4.7'
+
+        $scanner.Check('(\d)\.(\d)') | Should Be $true
+        $scanner.regexMatch.Groups | Should Not Be Null
+        $scanner.regexMatch.Groups.Count | Should Be 3
+        $scanner.regexMatch.Groups[1].Value | Should Be 4
+        $scanner.regexMatch.Groups[2].Value | Should Be 7
+
+        $matches = $scanner.Matches()
+        $matches.Count | Should Be 3
+        $matches[1].Value | Should Be 4
+        $matches[2].Value | Should Be 7
+    }
+}
 Describe "Test words, whitespace and eos" {
     Context "String being parsed ['This is an example string']" {
         It "Should work" {
