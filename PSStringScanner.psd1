@@ -4,7 +4,7 @@
     RootModule        = 'PSStringScanner.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.5'
+    ModuleVersion     = '1.0.6'
 
     # ID used to uniquely identify this module
     GUID              = '44ca17fd-a4a7-4316-a1d8-76bc5abbe1c7'
