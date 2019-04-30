@@ -156,6 +156,22 @@ class PSStringScanner : ICloneable {
     }
 }
 
+class PSStringScannerEx : PSStringScanner {
+    PSStringScannerEx($s) : base($s) {}
+
+    [object]NextWord() {
+        return $this.Scan("\w+")
+    }
+
+    [object]NextNumber() {
+        return $this.Scan("\d+")
+    }
+
+    [object]NextLine() {
+        return $this.Scan("\r?\n")
+    }
+}
+
 function New-PSStringScanner {
     param(
         [Parameter(Mandatory)]
@@ -163,6 +179,15 @@ function New-PSStringScanner {
     )
 
     [PSStringScanner]::new($text)
+}
+
+function New-PSStringScannerEx {
+    param(
+        [Parameter(Mandatory)]
+        $text
+    )
+
+    [PSStringScannerEx]::new($text)
 }
 
 Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Scan -Value {
@@ -173,4 +198,13 @@ Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Sca
         $token = $scanner.Scan($v)
         if ($null -ne $token) {$token}
     } until([string]::IsNullOrEmpty($token))
+}
+
+Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Parse -Value {
+    param($v)
+
+    $scanner = New-PSStringScanner $this
+    return $scanner.Scan($v)
+    # $null = $scanner.Scan($v)
+    # return $scanner
 }
