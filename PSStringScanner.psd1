@@ -10,7 +10,7 @@
     GUID              = '44ca17fd-a4a7-4316-a1d8-76bc5abbe1c7'
 
     # Author of this module
-    Author            = 'Dougl Finke'
+    Author            = 'Doug Finke'
 
     # Company or vendor of this module
     CompanyName       = 'Doug Finke'
