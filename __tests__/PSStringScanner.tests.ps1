@@ -544,7 +544,35 @@ Describe "Test unscan" {
         $script:scanner = New-PSStringScanner "test string"
     }
 
-    It "Match should be null if not found" {
+    It "Match should NOT be null if found" {
+        $null = $scanner.Scan('test')
+        $scanner.regexMatch | Should Not Be Null
+    }
 
+    It "Match should be null if not found" {
+        $null = $scanner.Scan('yyz')
+        $scanner.regexMatch | Should Be $null
+    }
+
+    It "Should unscan" {
+        $scanner.Scan('..') | Should BeExactly 'te'
+        $scanner.regexMatch | Should Not Be Null
+        $scanner.pos | Should Be 2
+
+        $scanner.Scan('st') | Should BeExactly 'st'
+        $scanner.regexMatch | Should Not Be Null
+        $scanner.pos | Should Be 4
+
+        $scanner.UnScan()
+        $scanner.pos | Should Be 2
+        $scanner.regexMatch | Should Be $null
+    }
+
+    It "Should have an unscan error" {
+        $scanner.Scan('\w+')   | Should BeExactly "test"
+        $scanner.UnScan()
+        $scanner.Scan('..')  | Should BeExactly "te"
+        $scanner.Scan('\d')    | Should Be $null
+        {$scanner.UnScan()} | Should Throw 'ScanError: unscan failed: previous match record not exist'
     }
 }

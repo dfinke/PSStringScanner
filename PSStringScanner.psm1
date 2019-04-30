@@ -24,6 +24,9 @@ class PSStringScanner : ICloneable {
         if ($result.Success) {
             $this.regexMatch = $result
         }
+        else {
+            $this.regexMatch = $null
+        }
 
         return $result
     }
@@ -153,6 +156,16 @@ class PSStringScanner : ICloneable {
         $newPSStringScanner.pos = $this.pos
 
         return $newPSStringScanner
+    }
+
+    UnScan() {
+        if ($null -ne $this.regexMatch) {
+            $this.pos -= $this.regexMatch.Length
+            $this.regexMatch = $null
+        }
+        else {
+            throw "ScanError: unscan failed: previous match record not exist"
+        }
     }
 }
 
