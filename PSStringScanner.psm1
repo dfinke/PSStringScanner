@@ -150,6 +150,21 @@ class PSStringScanner : ICloneable {
         return $retVal
     }
 
+    [object]UnGetCh() {
+
+        $retVal = $null
+        if ($this.EoS()) {
+            return $retVal
+        }
+
+        if ($this.pos -gt 0) {
+            $this.pos -= 1
+            $retVal = $this.s.substring($this.pos, 1)
+        }
+
+        return $retVal
+    }
+
     [Object] Clone() {
 
         $newPSStringScanner = [PSStringScanner]::new($this.s)

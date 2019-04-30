@@ -539,6 +539,22 @@ Describe "Test GetCh" {
     }
 }
 
+Describe "Test UnGetCh" {
+
+    It "Should UnGetCh" {
+        $scanner = New-PSStringScanner 'abcde'
+
+        $scanner.GetCh() | Should BeExactly 'a'
+        $scanner.pos | Should Be 1
+
+        $scanner.UnGetCh() | Should Be 'a'
+        $scanner.pos | Should Be 0
+
+        $scanner.UnGetCh() | Should Be $null
+        $scanner.pos | Should Be 0
+    }
+}
+
 Describe "Test unscan" {
     BeforeEach {
         $script:scanner = New-PSStringScanner "test string"
