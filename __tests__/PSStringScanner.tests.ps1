@@ -1,18 +1,5 @@
-$manifestPath = $PSScriptRoot | Join-Path -ChildPath '..' | Join-Path -ChildPath 'PSStringScanner.psd1' | Resolve-Path
+$manifestPath = "$PSScriptRoot\..\PSStringScanner.psd1"
 Import-Module $manifestPath -Force
-
-Describe "Module Health" {
-    It "Should have a valid module manifest" {
-        Test-ModuleManifest -Path $manifestPath | Should BeOfType ([psmoduleinfo])
-    }
-
-    It "Should have a manifest that meets PSGallery Requirements" {
-        # this catches one verified case so far of a valid manifest rejected by PSGallery
-        # https://github.com/dfinke/NameIT/issues/24
-        
-        Import-PowerShellDataFile -Path $manifestPath | Should BeOfType [hashtable]
-    }
-}
 
 Describe "Test match results" {
 
@@ -549,5 +536,15 @@ Describe "Test GetCh" {
         $scanner.GetCh() | Should BeExactly 'n'
         $scanner.GetCh() | Should BeExactly 'g'
         $scanner.GetCh() | Should BeNullOrEmpty
+    }
+}
+
+Describe "Test unscan" {
+    BeforeEach {
+        $script:scanner = New-PSStringScanner "test string"
+    }
+
+    It "Match should be null if not found" {
+
     }
 }
