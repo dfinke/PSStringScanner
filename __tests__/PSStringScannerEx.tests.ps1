@@ -12,14 +12,7 @@ over the lazy dog
 
         $scanner.NextWord() | Should BeExactly "The"
         $scanner.NextNumber() | Should Be 10
-
-        # if ($IsLinux -or $IsMacOS) {
         $scanner.NextLine() | Should Be ([System.Environment]::NewLine)
-        # }
-        # else {
-        #     $scanner.NextLine() | Should Be "`r`n"
-        # }
-
         $scanner.NextWord() | Should BeExactly "over"
         $scanner.NextWord() | Should BeExactly "the"
     }
