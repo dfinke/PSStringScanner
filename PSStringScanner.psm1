@@ -112,6 +112,7 @@ class PSStringScanner : ICloneable {
 
     Reset() {
         $this.pos = 0
+        $this.regexMatch = $null
     }
 
     <#
@@ -185,7 +186,7 @@ class PSStringScanner : ICloneable {
 }
 
 class PSStringScannerEx : PSStringScanner {
-    PSStringScannerEx($s) : base($s) {}
+    PSStringScannerEx($s) : base($s) { }
 
     [object]NextWord() {
         return $this.Scan("\w+")
@@ -224,7 +225,7 @@ Update-TypeData -Force -TypeName String -MemberType ScriptMethod -MemberName Sca
     $scanner = New-PSStringScanner $this
     do {
         $token = $scanner.Scan($v)
-        if ($null -ne $token) {$token}
+        if ($null -ne $token) { $token }
     } until([string]::IsNullOrEmpty($token))
 }
 

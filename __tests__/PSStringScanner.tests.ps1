@@ -23,18 +23,18 @@ Describe "Test words, whitespace and eos" {
         It "Should work" {
             $scanner = New-PSStringScanner 'This is an example string'
 
-            $scanner.EoS()        | Should Be $false
-            $scanner.Scan("\w+")  | Should BeExactly 'This'
-            $scanner.Scan("\s+")  | Should Be ' '
-            $scanner.Scan("\w+")  | Should BeExactly 'is'
-            $scanner.EoS()        | Should Be $false
-            $scanner.Scan("\s+")  | Should Be ' '
-            $scanner.Scan("\w+")  | Should BeExactly 'an'
-            $scanner.Scan("\s+")  | Should Be ' '
-            $scanner.Scan("\w+")  | Should BeExactly  'example'
-            $scanner.Scan("\s+")  | Should Be ' '
-            $scanner.Scan("\w+")  | Should BeExactly 'string'
-            $scanner.EoS()        | Should Be $true
+            $scanner.EoS() | Should Be $false
+            $scanner.Scan("\w+") | Should BeExactly 'This'
+            $scanner.Scan("\s+") | Should Be ' '
+            $scanner.Scan("\w+") | Should BeExactly 'is'
+            $scanner.EoS() | Should Be $false
+            $scanner.Scan("\s+") | Should Be ' '
+            $scanner.Scan("\w+") | Should BeExactly 'an'
+            $scanner.Scan("\s+") | Should Be ' '
+            $scanner.Scan("\w+") | Should BeExactly  'example'
+            $scanner.Scan("\s+") | Should Be ' '
+            $scanner.Scan("\w+") | Should BeExactly 'string'
+            $scanner.EoS() | Should Be $true
         }
     }
 }
@@ -44,51 +44,51 @@ Describe "Test words, whitespace and eos step-by-step" {
         $scanner = New-PSStringScanner 'This is an example string'
 
         It "Verifying not EoS [$($scanner.EoS())]" {
-            $scanner.EoS()        | Should Be $false
+            $scanner.EoS() | Should Be $false
         }
 
         It "Next word ['This']" {
-            $scanner.Scan("\w+")  | Should BeExactly 'This'
+            $scanner.Scan("\w+") | Should BeExactly 'This'
         }
 
         It "Followed by a space [' ']" {
-            $scanner.Scan("\s+")  | Should BeExactly ' '
+            $scanner.Scan("\s+") | Should BeExactly ' '
         }
 
         It "Next word ['is']" {
-            $scanner.Scan("\w+")  | Should BeExactly 'is'
+            $scanner.Scan("\w+") | Should BeExactly 'is'
         }
 
         It "Verifying not EoS [$($scanner.EoS())]" {
-            $scanner.EoS()        | Should Be $false
+            $scanner.EoS() | Should Be $false
         }
 
         It "Followed by a space [' ']" {
-            $scanner.Scan("\s+")  | Should BeExactly ' '
+            $scanner.Scan("\s+") | Should BeExactly ' '
         }
 
         It "Next word ['an']" {
-            $scanner.Scan("\w+")  | Should BeExactly 'an'
+            $scanner.Scan("\w+") | Should BeExactly 'an'
         }
 
         It "Followed by a space [' ']" {
-            $scanner.Scan("\s+")  | Should BeExactly ' '
+            $scanner.Scan("\s+") | Should BeExactly ' '
         }
 
         It "Next word ['example']" {
-            $scanner.Scan("\w+")  | Should BeExactly 'example'
+            $scanner.Scan("\w+") | Should BeExactly 'example'
         }
 
         It "Followed by a space [' ']" {
-            $scanner.Scan("\s+")  | Should BeExactly ' '
+            $scanner.Scan("\s+") | Should BeExactly ' '
         }
 
         It "Next word ['string']" {
-            $scanner.Scan("\w+")  | Should BeExactly 'string'
+            $scanner.Scan("\w+") | Should BeExactly 'string'
         }
 
         It "Verifying EoS is [$($scanner.EoS())]" {
-            $scanner.EoS()        | Should Be $true
+            $scanner.EoS() | Should Be $true
         }
     }
 }
@@ -223,7 +223,7 @@ Describe "Test loops on List ['Eggs, cheese, onion, potato, peas']" {
 
         $script:scanner = New-PSStringScanner 'Eggs, cheese, onion, potato, peas'
 
-        $actualItems = do {$scanner.scan("\w+")} until ($scanner.EoS())
+        $actualItems = do { $scanner.scan("\w+") } until ($scanner.EoS())
 
         It "Item count should be 5" {
             $actualItems.Count | Should Be 5
@@ -242,17 +242,17 @@ Describe "Test SkipUntil" {
 
     It "Check for 'Foo' in string 'Foo Bar Baz' pos [3]" {
         $scanner.SkipUntil("Foo") | Should Be 3
-        $scanner.pos              | Should Be 3
+        $scanner.pos | Should Be 3
     }
 
     It "Check for 'Bar' in string 'Foo Bar Baz' pos [7]" {
         $scanner.SkipUntil("Bar") | Should Be 7
-        $scanner.pos              | Should Be 7
+        $scanner.pos | Should Be 7
     }
 
     It "Check for 'Qux' in string 'Foo Bar Baz' pos[`$null] and EoS [`$false]" {
         $scanner.SkipUntil("Qux") | Should Be $null
-        $scanner.EoS()            | Should Be $false
+        $scanner.EoS() | Should Be $false
     }
 
     It "Check for '12' in string 'Fri Dec 12 1975 14:39' pos [10]" {
@@ -288,29 +288,29 @@ Describe "Test CheckUntil" {
 
     It "Check for 'Foo' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Foo") | Should Be 'Foo'
-        $scanner.pos              | Should Be 0
+        $scanner.pos | Should Be 0
     }
 
     It "Check for 'Foo Bar' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Foo Bar") | Should Be 'Foo Bar'
-        $scanner.pos              | Should Be 0
+        $scanner.pos | Should Be 0
     }
 
     It "Check for 'Bar' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Bar") | Should Be "Bar"
-        $scanner.pos              | Should Be 0
+        $scanner.pos | Should Be 0
     }
 
     It "Check for 'Qux' in 'Foo Bar Baz'" {
         $scanner.CheckUntil("Qux") | Should Be $null
-        $scanner.EoS()            | Should Be $false
+        $scanner.EoS() | Should Be $false
     }
 
     It "Check for '12' in 'Fri Dec 12 1975 14:39'" {
         $script:scanner = New-PSStringScanner 'Fri Dec 12 1975 14:39'
         $scanner.CheckUntil("12") | Should Be 12
-        $scanner.pos              | Should Be 0
-        $scanner.EoS()            | Should Be $false
+        $scanner.pos | Should Be 0
+        $scanner.EoS() | Should Be $false
     }
 
 }
@@ -348,7 +348,7 @@ version = "24"
         $WHITESPACE = '\s+'
         $QUOTE = '"'
 
-        $kvp = [Ordered]@{}
+        $kvp = [Ordered]@{ }
 
         do {
             $key = $scanner.Scan($NAME)
@@ -381,7 +381,7 @@ Describe "Scan 'The quick brown fox jumped over the lazy dog.'" {
     }
 
     It "Position should be 0" {
-        $scanner.pos         | Should Be 0
+        $scanner.pos | Should Be 0
     }
 
     It "Should be 'The'" {
@@ -389,7 +389,7 @@ Describe "Scan 'The quick brown fox jumped over the lazy dog.'" {
     }
 
     It "Position should be 3" {
-        $scanner.pos         | Should Be 3
+        $scanner.pos | Should Be 3
     }
 
     It "Should be empty string" {
@@ -397,7 +397,7 @@ Describe "Scan 'The quick brown fox jumped over the lazy dog.'" {
     }
 
     It "Position should be 3" {
-        $scanner.pos         | Should Be 3
+        $scanner.pos | Should Be 3
     }
 }
 
@@ -410,7 +410,7 @@ Describe "Test Clone() method" {
     It "Should Clone" {
         $d = $scanner.Clone()
 
-        $d.s   | Should be $scanner.s
+        $d.s | Should be $scanner.s
         $d.pos | Should Be $scanner.pos
     }
 
@@ -418,13 +418,13 @@ Describe "Test Clone() method" {
 
         $d = $scanner.Clone()
 
-        $d.s         | Should Be $scanner.s
-        $d.pos       | Should Be $scanner.pos
+        $d.s | Should Be $scanner.s
+        $d.pos | Should Be $scanner.pos
 
         $actual = $d.Scan("jumped")
 
-        $actual      | Should BeExactly "jumped"
-        $d.pos       | Should Be 26
+        $actual | Should BeExactly "jumped"
+        $d.pos | Should Be 26
         $scanner.pos | Should Be 0
     }
 }
@@ -487,14 +487,15 @@ Describe "Test Clone() method" {
 
         $actual = $scanner.Scan("dog\.")
 
-        $actual      | Should BeExactly "dog."
+        $actual | Should BeExactly "dog."
         $scanner.pos | Should Be $str.Length
 
         $scanner.Reset()
         $scanner.pos | Should Be 0
+        $scanner.regexMatch | Should Be $null
 
         $actual = $scanner.Scan("quick")
-        $actual      | Should BeExactly "quick"
+        $actual | Should BeExactly "quick"
         $scanner.pos | Should Be 9
     }
 }
@@ -503,10 +504,10 @@ Describe "Test Peek" {
     It "Should Peek" {
         $scanner = New-PSStringScanner "test string"
 
-        $scanner.Peek(7)  | Should BeExactly "test st"
-        $scanner.Peek(7)  | Should BeExactly "test st"
+        $scanner.Peek(7) | Should BeExactly "test st"
+        $scanner.Peek(7) | Should BeExactly "test st"
         $scanner.Scan("test")
-        $scanner.Peek(5)  | Should BeExactly " stri"
+        $scanner.Peek(5) | Should BeExactly " stri"
         $scanner.Peek(10) | Should BeExactly " string"
         $scanner.Scan("string")
         $scanner.Peek(10) | Should BeNullOrEmpty
@@ -585,10 +586,10 @@ Describe "Test unscan" {
     }
 
     It "Should have an unscan error" {
-        $scanner.Scan('\w+')   | Should BeExactly "test"
+        $scanner.Scan('\w+') | Should BeExactly "test"
         $scanner.UnScan()
-        $scanner.Scan('..')  | Should BeExactly "te"
-        $scanner.Scan('\d')    | Should Be $null
-        {$scanner.UnScan()} | Should Throw 'ScanError: unscan failed: previous match record not exist'
+        $scanner.Scan('..') | Should BeExactly "te"
+        $scanner.Scan('\d') | Should Be $null
+        { $scanner.UnScan() } | Should Throw 'ScanError: unscan failed: previous match record not exist'
     }
 }
