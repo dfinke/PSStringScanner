@@ -14,7 +14,7 @@ over the lazy dog
         $scanner.NextNumber() | Should Be 10
 
         if ($IsLinux -or $IsMacOS) {
-            $scanner.NextLine() | Should Be "\n"
+            $scanner.NextLine() | Should Be [System.Environment]::NewLine
         }
         else {
             $scanner.NextLine() | Should Be "`r`n"
