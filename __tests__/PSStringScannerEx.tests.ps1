@@ -10,10 +10,17 @@ over the lazy dog
 "@
         $scanner = New-PSStringScannerEx $s
 
-        $scanner.NextWord()   | Should BeExactly "The"
+        $scanner.NextWord() | Should BeExactly "The"
         $scanner.NextNumber() | Should Be 10
-        $scanner.NextLine()   | Should Be "`r`n"
-        $scanner.NextWord()   | Should BeExactly "over"
-        $scanner.NextWord()   | Should BeExactly "the"
+
+        if ($IsLinux -or $IsMacOS) {
+            $scanner.NextLine() | Should Be "\r\n"
+        }
+        else {
+            $scanner.NextLine() | Should Be "`r`n"
+        }
+
+        $scanner.NextWord() | Should BeExactly "over"
+        $scanner.NextWord() | Should BeExactly "the"
     }
 }
