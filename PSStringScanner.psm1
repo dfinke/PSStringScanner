@@ -202,6 +202,7 @@ class PSStringScannerEx : PSStringScanner {
 }
 
 function New-PSStringScanner {
+    [OutputType([PSStringScanner])]
     param(
         [Parameter(Mandatory)]
         $text
@@ -211,6 +212,7 @@ function New-PSStringScanner {
 }
 
 function New-PSStringScannerEx {
+    [OutputType([PSStringScannerEx])]
     param(
         [Parameter(Mandatory)]
         $text
